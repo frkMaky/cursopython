@@ -12,5 +12,37 @@ for i in (1,2,3):   # For con una Tupla
 for i in ("Lunes","Martes","Miércoles"):   # For con una Tupla
     print("Tupla: " + str(i) )
 
-for i in range(3):   # For con un rango
-    print("Rango: " + str(i+1) )
+for i in ["Pildora","Casa",3]:
+	print(str(i) + " - ", end="")	# , end="" como argumento hace que no haya salto de linea en cada vuelta
+
+for i in "Recorriendo_una_cadena":	# Recorrer una cadena con unbucle for
+	print(i)
+
+# Comprobar una direccion de email
+email = False
+punto = 0
+direccion = input("Introduce dirección de email:")
+for i in direccion:
+	if (i=='@'):
+		email= True
+	if (i=='.'):
+		punto +=1
+if email and (punto>0):
+	print("Email correcto")
+else:
+	print("Email incorrecto")
+
+# range
+for i in range(3):   # For con un rango de 3 elementos: 0 a 2
+    print(f"Valor de la variable {i}")	# Notacion print(f"texto {variable} texto")
+
+for i in range(5,10): # Desde 5 hasta 9 
+	print (f"Valor: {i}")
+
+for i in range(5,100, 3): # Desde 5 hasta 100 contando de 3 en 3
+	print (f"Valor: {i}")
+
+print (len("Longitud de la cadena"))	# Funcion len(str) para devolver la longitud de una cadena
+
+for i in (range(len(email))):	# Recorrer un bucle hasta la longitud del email
+	print(i)
