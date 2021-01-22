@@ -44,5 +44,24 @@ for i in range(5,100, 3): # Desde 5 hasta 100 contando de 3 en 3
 
 print (len("Longitud de la cadena"))	# Funcion len(str) para devolver la longitud de una cadena
 
-for i in (range(len(email))):	# Recorrer un bucle hasta la longitud del email
+for i in (range(len(direccion))):	# Recorrer un bucle hasta la longitud del email
 	print(i)
+
+for letra in "Python":
+
+	if letra=="h":	# Si la letra es h salta a la siguiente vuelta de bucle
+		continue	
+	print(letra)
+
+for i in direccion:	# For con grupo else
+	if i=="@":
+		boolArroba = True
+		break;	# El break sale del bucle for (incluido el else)
+else:	# Se ejecuta cuando terminal el bucle for
+	boolArroba = False
+print ("La direccion de correo contiene arroba: " +  str(boolArroba))
+
+
+
+class miClase:
+	pass # Devuelve null - se usa para dejar cosas sin implementar y que el programa no se caiga
