@@ -49,7 +49,10 @@ class Furgoneta(Vehiculos):	# Hereda de Vehiculos
 
 class VElectricos(Vehiculos):
 
-	def __init__(self):			# Constructor 
+	def __init__(self,marca,modelo):			# Constructor 
+
+		super().__init__(marca,modelo)
+
 		self.autonomia = 100
 
 	def cargar_energia(self):	# Pone a cargar el vehiculo electrico
@@ -76,7 +79,7 @@ miFurgoneta.estado()
 
 print(miFurgoneta.carga(True))
 
-miBici = BicicletaElectrica()	# Hereda de VElectricos() y Vehiculos(marca, modelo) // Toma el constructor de la primera clase por parámetro en la clase
+miBici = BicicletaElectrica("Orbea","JH1500")	# Hereda de VElectricos() y Vehiculos(marca, modelo) // Toma el constructor de la primera clase por parámetro en la clase
 
 print(miBici.cargar_energia())
 
