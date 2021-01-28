@@ -34,3 +34,5 @@ miFrame.pack(fill="y", expand=True)	# Rellenado y permitir expandir frame al red
 miFrame.pack(side="left",anchor="n") # Se empaqueta la lamina (admite opciones)
 
 raiz.mainloop()			# Se ejecuta la ventana
+
+
