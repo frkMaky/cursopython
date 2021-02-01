@@ -5,6 +5,10 @@ raiz=Tk()	# Se crea ventana
 miFrame = Frame(raiz)	# Se pone frame en la ventana
 miFrame.pack()			# Se empaqueta todo en la ventana
 
+operacion=""	# Operacion a realizar variable GLOBAL
+
+resultado = 0	# Resultado de la operacion
+
 # Pantalla --------------------------------------------------
 
 numeroPantalla=StringVar()	# Nª a mostrar en la pantalla
@@ -16,8 +20,29 @@ pantalla.config(bg="black", fg="green", justify="right")
 # Pulsaciones teclado ----------------------------------------
 
 def numeroPulsado(num):
+	global operacion # Se utiliza variable GLOBAL
 
-	numeroPantalla.set(numeroPantalla.get() + str(num))
+	if operacion != "":	# Si se ha pulsado operacion no se sigue concatenando numero
+		numeroPantalla.set(num)
+		operacion=""
+	else:
+		numeroPantalla.set(numeroPantalla.get() + str(num))
+
+# El Resultado ----------------------------------------
+
+def el_resultado():
+	global resultado
+
+	numeroPantalla.set(resultado + int(numeroPantalla.get()))	# Se pone el resultado en pantalla
+
+# Suma ----------------------------------------
+def suma(num):
+	global operacion # Se utiliza variable GLOBAL
+	global resultado
+
+	resultado += int(num)	# Se suma al resultado el valor del nº en pantalla
+	operacion="suma"
+	numeroPantalla.set(resultado)	# Se pone el resultado en pantalla
 
 # BOTONES POR FILA-------------------------------------------------
 # 789% ------------------------------------------------------------
@@ -38,8 +63,8 @@ botonRest = Button(miFrame,text="-",width=3).grid(row=4,column=4)
 # 0.=+  --------------------------------------------------
 boton0 = Button(miFrame,text="0",width=3, command=lambda:numeroPulsado("0")).grid(row=5,column=1)
 botonComa = Button(miFrame,text=".",width=3).grid(row=5,column=2)
-botonIgual = Button(miFrame,text="=",width=3).grid(row=5,column=3)
-botonSuma = Button(miFrame,text="+",width=3).grid(row=5	,column=4)
+botonIgual = Button(miFrame,text="=",width=3, command=lambda:el_resultado()).grid(row=5,column=3)
+botonSuma = Button(miFrame,text="+",width=3, command=lambda:suma(numeroPantalla.get())).grid(row=5	,column=4)
 #------------------------------------------------------------------
 
 raiz.mainloop()	# Se ejecuta ventana
