@@ -2,14 +2,42 @@ from tkinter import *			# Libreria de ventanas
 from tkinter import messagebox	# Ventanas emergentes
 import sqlite3					# BBDD sqlite
 
+# ---------------------------------------------------------------------------
 
+def conexionBBDD():	# Crea la BBDD de usuarios
+	
+	miConexion = sqlite3.connect("Usuarios")
+	miCursor = miConexion.cursor()
+
+	try:
+		miCursor.execute('''
+			CREATE TABLE DATOSUSUARIO (
+			ID INTEGER PRIMARY KEY AUTOINCREMENT, 
+			NOMBRE_USUARIO VARCHAR(50),
+			PASSWORD VARCHAR(50),
+			APELLIDO VARCHAR(50),
+			DIRECCION VARCHAR(100),
+			COMENTARIOS VARCHAR(250))
+			''')
+		messagebox.showinfo("BBDD","BBDD creada con éxito")
+	except:
+		messagebox.showwarning("¡Atención!","La BBDD ya existe")
+
+def salirAplicacion(): # Sale de la aplicación al confirmar
+	
+	valor = messagebox.askquestion("Salir","¿Deseas salir de la aplicacion?")
+
+	if valor=="yes":
+		root.destroy()
+
+# ---------------------------------------------------------------------------
 root = Tk()	# Ventana principal 
 
 # Aspecto ventana principal -----
 root.title("CRUD Usuarios")	# Titulo
 root.resizable(True,True)			# Permitir redimensionar (ancho,alto)
 root.iconbitmap("hoja.gif")			# Icono de la ventana .iconbitmap(ruta imagen) 
-root.geometry("650x350")			# Tamaño de la ventana
+root.geometry("650x450")			# Tamaño de la ventana
 root.config(bg="gray")				# Color de fondo de la ventana
 # ------------------------------
 
@@ -19,8 +47,8 @@ root.config(menu=barraMenu, width=300, height=300)	# y se vincula
 
 # Opciones del Menu - BBDD
 bbddMenu = Menu(barraMenu, tearoff=0)
-bbddMenu.add_command(label="Conectar")
-bbddMenu.add_command(label="Cerrar")
+bbddMenu.add_command(label="Conectar", command=conexionBBDD)
+bbddMenu.add_command(label="Cerrar", command=salirAplicacion)
 # Opciones del Menu - Borrar
 borrarMenu = Menu(barraMenu, tearoff=0)
 borrarMenu.add_command(label="Borrar Campos")
