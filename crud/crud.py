@@ -30,6 +30,23 @@ def salirAplicacion(): # Sale de la aplicación al confirmar
 	if valor=="yes":
 		root.destroy()
 
+def limpiarCampos(): # Borra los campos del formulario
+	varID.set("")
+	varNombre.set("")
+	varApellido.set("")
+	varDireccion.set("")
+	varPassword.set("")
+	cuadroComentarios.delete(1.0,END)
+
+def crear():	# CRUD - Inserta nuevo registro
+	
+	miConexion = sqlite3.connect("Usuarios")
+	miCursor = miConexion.cursor()
+	miCursor.execute("INSERT INTO DATOSUSUARIO VALUES(NULL,'" +  varNombre.get() + "','" + varPassword.get() + "','" + varApellido.get() + "','" + varDireccion.get() + "','" + cuadroComentarios.get("1.0",END) + "')") 
+	miConexion.commit()
+	messagebox.showinfo("BBDD","Registro insertado con éxito")
+
+
 # ---------------------------------------------------------------------------
 root = Tk()	# Ventana principal 
 
@@ -51,10 +68,10 @@ bbddMenu.add_command(label="Conectar", command=conexionBBDD)
 bbddMenu.add_command(label="Cerrar", command=salirAplicacion)
 # Opciones del Menu - Borrar
 borrarMenu = Menu(barraMenu, tearoff=0)
-borrarMenu.add_command(label="Borrar Campos")
+borrarMenu.add_command(label="Borrar Campos", command=limpiarCampos)
 # Opciones del Menu - CRUD
 crudMenu = Menu(barraMenu, tearoff=0)
-crudMenu.add_command(label="Crear")
+crudMenu.add_command(label="Crear", command=crear)
 crudMenu.add_command(label="Leer")
 crudMenu.add_command(label="Actualizar")
 crudMenu.add_command(label="Borrar")
@@ -75,20 +92,27 @@ barraMenu.add_cascade(label="Ayuda", menu=ayudaMenu)
 formularioFrame = Frame(root)
 formularioFrame.pack()
 
-cuadroId = Entry(formularioFrame).grid(row=0,column=1, padx=10, pady=10)
+# Variables para los campos de texto
+varID = StringVar()
+varNombre = StringVar()
+varApellido = StringVar()
+varDireccion = StringVar()
+varPassword = StringVar()
 
-cuadroNombre = Entry(formularioFrame)
+cuadroId = Entry(formularioFrame, textvariable=varID).grid(row=0,column=1, padx=10, pady=10)
+
+cuadroNombre = Entry(formularioFrame, textvariable=varNombre)
 cuadroNombre.config(justify="right",fg="red")
 cuadroNombre.grid(row=1,column=1, padx=10, pady=10)
 
-cuadroPassword = Entry(formularioFrame)
+cuadroPassword = Entry(formularioFrame,textvariable=varPassword)
 cuadroPassword.config(show="?")
 cuadroPassword.grid(row=2,column=1, padx=10, pady=10)
 
-cuadroApellido = Entry(formularioFrame)
+cuadroApellido = Entry(formularioFrame, textvariable=varApellido)
 cuadroApellido.grid(row=3,column=1, padx=10, pady=10)
 
-cuadroDireccion = Entry(formularioFrame)
+cuadroDireccion = Entry(formularioFrame, textvariable=varDireccion)
 cuadroDireccion.grid(row=4,column=1, padx=10, pady=10)
 
 cuadroComentarios = Text(formularioFrame,width=20,height=5)	#Area de comentarios
@@ -122,7 +146,7 @@ comentariosLabel.grid(row=5,column=0, padx=10, pady=10)
 # FRAME BOTONES ----------------------
 botonesFrame = Frame(root)
 
-botonCrear = Button(botonesFrame,text="Create")
+botonCrear = Button(botonesFrame,text="Create", command=crear)
 botonCrear.grid(row=1,column=0, sticky="e",padx=10, pady=10)
 
 botonLeer = Button(botonesFrame,text="Read")
