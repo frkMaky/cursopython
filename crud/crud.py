@@ -42,7 +42,11 @@ def crear():	# CRUD - Inserta nuevo registro
 	
 	miConexion = sqlite3.connect("Usuarios")
 	miCursor = miConexion.cursor()
-	miCursor.execute("INSERT INTO DATOSUSUARIO VALUES(NULL,'" +  varNombre.get() + "','" + varPassword.get() + "','" + varApellido.get() + "','" + varDireccion.get() + "','" + cuadroComentarios.get("1.0",END) + "')") 
+	# miCursor.execute("INSERT INTO DATOSUSUARIO VALUES(NULL,'" +  varNombre.get() + "','" + varPassword.get() + "','" + varApellido.get() + "','" + varDireccion.get() + "','" + cuadroComentarios.get("1.0",END) + "')") 
+	
+	# Consulta parametrizada
+	datos = varNombre.get(), varPassword.get(), varApellido.get(), varDireccion.get(),cuadroComentarios.get("1.0",END)
+	miCursor.execute("INSERT INTO DATOSUSUARIO VALUES(NULL,?,?,?,?,?)",(datos))
 	miConexion.commit()
 	messagebox.showinfo("BBDD","Registro insertado con éxito")
 
@@ -65,14 +69,29 @@ def actualizar():	# CRUD - Actualiza registro
 	
 	miConexion = sqlite3.connect("Usuarios")
 	miCursor = miConexion.cursor()
-	miCursor.execute(" UPDATE DATOSUSUARIO SET NOMBRE_USUARIO =' " + varNombre.get() +
+
+	"""miCursor.execute(" UPDATE DATOSUSUARIO SET NOMBRE_USUARIO =' " + varNombre.get() +
 	 "', PASSWORD =' " + varPassword.get() +
 	 "', APELLIDO =' " + varApellido.get() +  
 	 "', DIRECCION =' " + varDireccion.get() + 
 	 "', COMENTARIOS =' " + cuadroComentarios.get("1.0",END) + 
 	 "' WHERE ID = " + varID.get()  ) 
+	 """
+
+	# Consulta parametrizada
+	datos = varNombre.get(), varPassword.get(), varApellido.get(), varDireccion.get(),cuadroComentarios.get("1.0",END)
+	miCursor.execute("UPDATE DATOSUSUARIO SET NOMBRE_USUARIO=?,PASSWORD =?,APELLIDO=?,DIRECCION=?,COMENTARIOS=?" +
+		"WHERE ID="+ varID.get(),(datos) )
+	
 	miConexion.commit()
 	messagebox.showinfo("BBDD","Registro actualizado con éxito")
+
+def eliminar():	# CRUD - Eliminar registro
+	miConexion = sqlite3.connect("Usuarios")
+	miCursor = miConexion.cursor()
+	miCursor.execute("DELETE FROM DATOSUSUARIO WHERE ID=" + varID.get()) 
+	miConexion.commit()
+	messagebox.showinfo("BBDD","Registro eliminado con éxito")
 
 
 # ---------------------------------------------------------------------------
@@ -102,7 +121,7 @@ crudMenu = Menu(barraMenu, tearoff=0)
 crudMenu.add_command(label="Crear", command=crear)
 crudMenu.add_command(label="Leer", command=leer)
 crudMenu.add_command(label="Actualizar", command=actualizar)
-crudMenu.add_command(label="Borrar")
+crudMenu.add_command(label="Borrar", command=eliminar)
 # Opciones del Menu - Ayuda
 ayudaMenu = Menu(barraMenu, tearoff=0)
 ayudaMenu.add_command(label="Licencia")
@@ -183,7 +202,7 @@ botonLeer.grid(row=1,column=1, sticky="e",padx=10, pady=10)
 botonActualizar = Button(botonesFrame,text="Update", command=actualizar)
 botonActualizar.grid(row=1,column=2, sticky="e",padx=10, pady=10)
 
-botonBorrar = Button(botonesFrame,text="Delete")
+botonBorrar = Button(botonesFrame,text="Delete", command=eliminar)
 botonBorrar.grid(row=1,column=3, sticky="e",padx=10, pady=10)
 
 botonesFrame.pack()
