@@ -21,7 +21,7 @@ def calculoComision(empleado):
 	return empleado
 
 
-listaEmpleados2 = map(calculoComision, listaEmpleados)
+listaEmpleados2 = map(calculoComision	, listaEmpleados)
 
 for e in listaEmpleados2:
 	print(e)
