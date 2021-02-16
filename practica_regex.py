@@ -25,3 +25,17 @@ print(re.findall(textoBuscar2,cadena))
 
 print(len(re.findall(textoBuscar2,cadena)))
 
+# Metacaracteres - caracteres comodín
+
+lista_nombres = ["Ana Gómez", "María Martín", "Sandra Lopez" , "Santiago Martín"]
+
+for elemento in lista_nombres:
+	# Caracter comodin ^ - que comienze por 
+	if (re.findall('^Sandra',elemento)):	
+		print(elemento)
+	# Caracter comodin $ - que termine por
+	if (re.findall('Martín$',elemento)):	
+		print(elemento)
+	# Caracter comodin [] - que contenga los caracteres en la lista
+	if (re.findall('[ñ]',elemento)):	
+		print(elemento)
