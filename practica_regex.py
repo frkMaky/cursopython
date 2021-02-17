@@ -39,3 +39,16 @@ for elemento in lista_nombres:
 	# Caracter comodin [] - que contenga los caracteres en la lista
 	if (re.findall('[ñ]',elemento)):	
 		print(elemento)
+
+lista_nombres2 = ["Ana",
+	"Pedro",
+	"María",
+	"Rosa",
+	"Sandra",
+	"Celia"
+]
+# Rango meta
+for elemento in lista_nombres2:
+	if re.findall('[^O-T]',elemento):
+		print(elemento)
+
