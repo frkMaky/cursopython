@@ -1,18 +1,26 @@
 def funcion_decoradora(funcion_parametro):
-	def function_interna():
+
+	def function_interna(*args, **kwargs):
 		# Acciones adicionales que decoran
 		print("Vamos a realizar un cálculo:")
-		funcion_parametro()
+		funcion_parametro(*args, **kwargs)
 		print("Se ha terminado el cáculo")
 	return function_interna
 
 @funcion_decoradora
-def suma():
-	print(15+20)
+def suma(num1, num2):
+	print(num1 + num2)
 
 @funcion_decoradora
-def resta():
-	print(30-10)
+def resta(num1, num2):
+	print(num1 - num2)
 
-suma ()
-resta ()
+@funcion_decoradora
+def potencia(base, exponente):
+	print(pow(base,exponente))
+
+suma(7, 5)
+
+resta(12, 10)
+
+potencia(5, 3)
