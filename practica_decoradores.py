@@ -23,4 +23,4 @@ suma(7, 5)
 
 resta(12, 10)
 
-potencia(5, 3)
+potencia(base =5, exponente = 3)
